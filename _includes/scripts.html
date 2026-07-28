@@ -1,16 +1,99 @@
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ site.url }}/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-<script src="{{ site.url }}/assets/js/main.min.js"></script>
+<!-- ========================================== -->
+<!-- 宋式脚本：极简，不张扬，原生 JS               -->
+<!-- ========================================== -->
+
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+(function() {
+  'use strict';
 
-  ga('create', 'G-T5N5JY1E21', 'caihanlin.com');
-  ga('send', 'pageview');
+  // 1. 无 JS 降级：移除根类名，允许 CSS 区分有/无脚本环境
+  document.documentElement.classList.remove('no-js');
 
+  // 2. 导航栏滚动状态：明式风雅的微妙沉底
+  var nav = document.querySelector('.site-nav');
+  var lastScroll = 0;
+  
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      var current = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // 滚动超过 20px 时，导航栏增加沉底边框与极淡阴影
+      if (current > 20) {
+        nav.classList.add('is-scrolled');
+      } else {
+        nav.classList.remove('is-scrolled');
+      }
+      
+      lastScroll = current;
+    }, { passive: true });
+  }
+
+  // 3. 平滑滚动：所有锚点链接（如"观览项目"）
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      var target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        var navHeight = nav ? nav.offsetHeight : 0;
+        var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16; // 额外 16px 呼吸间距
+        
+        window.scrollTo({
+          top: targetPos,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // 4. 移动端底部横条：向下滚动时隐藏以腾出阅读空间，向上滚动时恢复
+  var mobileCta = document.querySelector('.hero-cta-mobile');
+  if (mobileCta) {
+    var scrollDir = 0;
+    var scrollTicking = false;
+    
+    window.addEventListener('scroll', function() {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(function() {
+          var current = window.pageYOffset || document.documentElement.scrollTop;
+          
+          if (current > scrollDir && current > 100) {
+            // 向下滚动：优雅沉底隐藏
+            mobileCta.style.transform = 'translateY(100%)';
+            mobileCta.style.opacity = '0';
+          } else {
+            // 向上滚动：恢复
+            mobileCta.style.transform = 'translateY(0)';
+            mobileCta.style.opacity = '1';
+          }
+          
+          scrollDir = current;
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+  }
+
+})();
 </script>
 
-<!-- https://analytics.google.com/analytics/ -->
-<!-- Lastly modified by Hanlin CAI in 2023/01/15 -->
+<!-- ========================================== -->
+<!-- 脚本配套样式：动态类名的视觉反馈               -->
+<!-- ========================================== -->
+<style>
+  /* 导航滚动沉底：明式风雅的微妙边界加深 */
+  .site-nav.is-scrolled {
+    box-shadow: 0 1px 0 var(--frame-deep), var(--shadow-mounting);
+    background: rgba(var(--bg-body), 0.98);
+  }
+
+  /* 移动端底部横条：过渡动画 */
+  .hero-cta-mobile {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+  }
+</style>

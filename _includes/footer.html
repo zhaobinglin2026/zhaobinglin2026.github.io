@@ -1,17 +1,72 @@
-{% if page.lang == 'en' %}
-<div class="page__footer-copyright" style="color:white;">
-  &copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }},
-  powered by <a href="https://antigravity.google/" rel="nofollow">Antigravity</a>,
-  <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
-  <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>.
-  Site last updated {{ "now" | date: '%Y-%m-%d' }}
-</div>
-{% else %}
-<div class="page__footer-copyright" style="color:white;">
-  &copy; {{ site.time | date: '%Y' }} {{ site.owner.name_cn | default: site.title }},
-  由 <a href="https://antigravity.google/" rel="nofollow">Antigravity</a>、
-  <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> 与
-  <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a> 驱动。
-  站点最后更新于 {{ "now" | date: '%Y-%m-%d' }}
-</div>
-{% endif %}
+<!-- ========================================== -->
+<!-- 宋式通用页脚：全局落款                        -->
+<!-- ========================================== -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    
+    <!-- 主落款：印章 + 署名 -->
+    <div class="footer-colophon">
+      <span class="seal-stamp red-ochre" aria-hidden="true"></span>
+      <span class="footer-name">赵冰琳记于脑所</span>
+    </div>
+    
+    <!-- 次行：版权与时空标记 -->
+    <p class="footer-meta">
+      <span class="footer-year">&copy; {{ site.time | date: '%Y' }}</span>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span class="footer-motto">以宋人之格物，致数字之良知</span>
+    </p>
+    
+  </div>
+</footer>
+
+<!-- 页脚补充样式 -->
+<style>
+  .site-footer {
+    margin-top: auto; /* 确保页脚在内容不足时仍贴底 */
+    padding: 3rem 0 2.5rem;
+    border-top: 1px solid var(--frame);
+    background: var(--bg-body);
+    transition: var(--transition-base);
+  }
+
+  .footer-inner {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 calc(var(--spacing-unit) * 3);
+    text-align: center;
+  }
+
+  .footer-colophon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-name {
+    font-family: var(--font-serif-sc);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-meta {
+    font-family: var(--font-serif-en), var(--font-serif-sc), serif;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .meta-sep {
+    margin: 0 0.5em;
+    opacity: 0.5;
+  }
+
+  /* 深色模式微调：页脚边框更沉 */
+  [data-theme="dark"] .site-footer {
+    border-top-color: var(--frame-deep);
+  }
+</style>

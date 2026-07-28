@@ -1,66 +1,226 @@
-<!-- Lastly modified by Hanlin CAI in 2023/04/26 -->
-<!-- It is not recommended to modify this code, unless you are a Pro-->
+---
+layout: default
+---
 
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<!-- ========================================== -->
+<!-- 第一卷 · 观物 -->
+<!-- ========================================== -->
+<section class="scroll-section hero-section" id="wu" aria-label="首页首屏">
+  <div class="hero-inner">
 
-<head>
-{% include head.html %}
+    <!-- 左侧：文 -->
+    <div class="hero-textual">
+      <header class="hero-header">
+        <h1 class="hero-name">{{ site.title | default: "赵冰琳" }}</h1>
+        <p class="hero-motto">设计学与认知神经科学交叉领域研究者</p>
+      </header>
 
-<script src="https://cdn.counter.dev/script.js" data-id="4c8f7caa-2b55-46cd-a995-2c4633303773" data-utcoffset="8"></script>
+      <p class="hero-declaration">
+        聚焦空间智能与人景交互，以虚拟现实仿真与生理测量技术，定量解析空间形态对人类认知与行为决策的影响。
+      </p>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T5N5JY1E21"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      <a href="#ge" class="hero-cta fish-tail-mark">
+        <span class="cta-text">观览项目</span>
+        <span class="cta-tail" aria-hidden="true"></span>
+      </a>
 
-  gtag('config', 'G-T5N5JY1E21');
-</script>
+      <!-- 印章小像 + 题跋 -->
+      <div class="hero-seal-group">
+        <div class="seal-portrait">
+          <img src="{{ '/images/Huqiqi.jpg' | relative_url }}" alt="赵冰琳" loading="lazy">
+        </div>
+        <div class="seal-signature">
+          <span class="seal-stamp red-ochre" aria-hidden="true"></span>
+          <span class="seal-text">赵冰琳记于脑所</span>
+        </div>
+      </div>
+    </div>
 
-</head>
+    <!-- 右侧：图 -->
+    <div class="hero-visual">
+      <div class="geometric-painting" role="img" aria-label="格物图：融合空间认知、神经科学与数据智能的微光破墨抽象山水">
+        
+        <!-- 静态底图：请替换为 AI 生成的格物图 -->
+        <img 
+          class="painting-base" 
+          src="{{ '/images/geometric-painting.jpg' | relative_url }}" 
+          alt="格物图"
+          onerror="this.style.display='none'">
 
-<body class="home" itemscope itemtype="http://schema.org/WebPage">
+        <!-- 自呼吸叠加层 -->
+        <div class="painting-breath-layer" aria-hidden="true">
+          <svg 
+            viewBox="0 0 1200 800" 
+            preserveAspectRatio="xMidYMid slice" 
+            class="breath-svg">
+            <defs>
+              <filter id="blur-soft" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="14" />
+              </filter>
+            </defs>
+            
+            <!-- 天青色微光节点：空间参数/数据交汇 -->
+            <circle class="breath-node" cx="780" cy="260" r="22" fill="rgba(143, 178, 201, 0.12)" filter="url(#blur-soft)" />
+            <circle class="breath-node" cx="620" cy="480" r="28" fill="rgba(143, 178, 201, 0.09)" filter="url(#blur-soft)" />
+            <circle class="breath-node" cy="620" cx="920" r="16" fill="rgba(143, 178, 201, 0.13)" filter="url(#blur-soft)" />
+            <circle class="breath-node" cx="540" cy="360" r="20" fill="rgba(143, 178, 201, 0.07)" filter="url(#blur-soft)" />
+            <circle class="breath-node" cx="860" cy="180" r="14" fill="rgba(143, 178, 201, 0.10)" filter="url(#blur-soft)" />
 
-{% include chrome-frame.html %}
+            <!-- 云气纹：神经信号/眼动轨迹的抽象 -->
+            <path class="breath-mist" d="M 180,650 Q 360,580 520,640 T 960,600" 
+                  fill="none" stroke="rgba(43, 43, 43, 0.035)" stroke-width="2" stroke-linecap="round" />
+            <path class="breath-mist" d="M 280,520 Q 460,490 620,540 T 1080,500" 
+                  fill="none" stroke="rgba(43, 43, 43, 0.025)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="breath-mist" d="M 120,720 Q 300,680 480,730 T 900,690" 
+                  fill="none" stroke="rgba(43, 43, 43, 0.02)" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
 
-{% include navigation.html %}
+  <!-- 移动端：底部固定横条 CTA -->
+  <div class="hero-cta-mobile">
+    <a href="#ge" class="cta-bar">观览项目</a>
+  </div>
+</section>
 
-<div class="image-wrap">
-  <div class="headline-wrap">
-    <h1>{{ page.title }}</h1>
-    {% if page.tagline %}<h2>{{ page.tagline }}</h2>{% endif %}
-  </div><!--/ .headline-wrap -->
-  <img src="{{ site.url }}/images/{{ page.image.feature }}" alt="{{ page.title }} feature image">
-</div><!-- /.image-wrap -->
+<!-- ========================================== -->
+<!-- 第二卷 · 知人 -->
+<!-- ========================================== -->
+<section class="scroll-section known-section" id="zhi" aria-label="研究兴趣">
+  <div class="section-inner">
 
-<div class="article-author-top">
-  {% include author-bio.html %}
-</div>
+    <header class="section-header">
+      <span class="section-ordinal">卷二</span>
+      <h2 class="section-title">知人</h2>
+      <p class="section-subtitle">研究兴趣</p>
+    </header>
 
-<div id="index" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/Blog">
-  <a href="{{ site.url}}/articles" class="btn btn-small pull-right">View all articles</a>
-  <h3>Latest Articles</h3>
-  <hr />
-  {% for post in site.categories.articles limit:5 %}    
-  <article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-    <h2 itemprop="headline"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
-    <p itemprop="text">{% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 120 }}{% endif %}</p>
-  </article>
-  {% endfor %}
-</div><!-- /#index -->
+    <!-- 宋版书序言页版式：宽栏正文 + 边栏注释 -->
+    <div class="preface-layout">
+      <div class="preface-main">
+        <p class="preface-lead">
+          吾之所究，在于空间之智。以虚拟现实为器，以生理测量为尺，格空间形态之数，致认知决策之理。
+        </p>
+        <p>
+          设计学与认知神经科学交叉领域研究者，聚焦空间智能与人景交互。擅长运用虚拟现实仿真与生理测量技术，定量解析空间形态对人类认知与行为决策的影响；具备扎实的 Python、C# 编程、交互实验系统开发、量化分析与机器学习能力。
+        </p>
+        <p>
+          研究涵盖动态视域仿真、复杂信息空间的认知负荷建模、面向认知神经实验的 3D 交互式系统研发，以及文化遗产的时空分异与交互仿真。致力于以“格物”之精神，探“致知”之边界。
+        </p>
+      </div>
 
-<div class="footer-wrap">
-  <footer>
-    {% include footer.html %}
-  </footer>
-</div><!-- /.footer-wrap -->
+      <aside class="preface-margin" aria-label="研究领域关键词">
+        <div class="vertical-keywords">
+          <span>空间认知</span>
+          <span class="keyword-sep">·</span>
+          <span>神经科学</span>
+          <span class="keyword-sep">·</span>
+          <span>机器学习</span>
+          <span class="keyword-sep">·</span>
+          <span>虚拟现实</span>
+          <span class="keyword-sep">·</span>
+          <span>眼动追踪</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 
-{% include scripts.html %}
-  
-</body>
-</html>
+<!-- ========================================== -->
+<!-- 第三卷 · 格物 -->
+<!-- ========================================== -->
+<section class="scroll-section works-section" id="ge" aria-label="精选项目">
+  <div class="section-inner">
+
+    <header class="section-header">
+      <span class="section-ordinal">卷三</span>
+      <h2 class="section-title">格物</h2>
+      <p class="section-subtitle">精选项目</p>
+    </header>
+
+    <div class="works-grid">
+
+      <!-- 项目一 -->
+      <article class="work-card mounting-frame">
+        <div class="frame-inner">
+          <div class="work-image-wrap">
+            <img src="{{ '/images/interface_sample.png' | relative_url }}" 
+                 alt="基于动态视域仿真的人景交互认知机制与实证研究" loading="lazy">
+          </div>
+          <div class="work-caption">
+            <h3 class="work-title">人景交互认知机制</h3>
+            <p class="work-desc">动态视域仿真与生理数据同步对齐</p>
+            <div class="work-meta">
+              <span class="meta-tag">Unity 3D</span>
+              <span class="meta-tag">C#</span>
+              <span class="meta-tag">眼动追踪</span>
+            </div>
+          </div>
+        </div>
+        <div class="frame-seal" aria-hidden="true"></div>
+      </article>
+
+      <!-- 项目二 -->
+      <article class="work-card mounting-frame">
+        <div class="frame-inner">
+          <div class="work-image-wrap">
+            <img src="{{ '/images/thermal_runaway_ml.png' | relative_url }}" 
+                 alt="复杂信息空间的认知负荷建模与交互设计研究" loading="lazy">
+          </div>
+          <div class="work-caption">
+            <h3 class="work-title">认知负荷建模</h3>
+            <p class="work-desc">高压作业环境下数字信息空间的视觉编码优化</p>
+            <div class="work-meta">
+              <span class="meta-tag">MATLAB</span>
+              <span class="meta-tag">SPSS</span>
+              <span class="meta-tag">眼动追踪</span>
+            </div>
+          </div>
+        </div>
+        <div class="frame-seal" aria-hidden="true"></div>
+      </article>
+
+      <!-- 项目三 -->
+      <article class="work-card mounting-frame">
+        <div class="frame-inner">
+          <div class="work-image-wrap">
+            <img src="{{ '/images/WM_encoder_decoder.png' | relative_url }}" 
+                 alt="大运河文化遗产时空分异归因与交互仿真研究" loading="lazy">
+          </div>
+          <div class="work-caption">
+            <h3 class="work-title">文化遗产交互仿真</h3>
+            <p class="work-desc">大运河时空分异归因与三维交互系统</p>
+            <div class="work-meta">
+              <span class="meta-tag">Unity WebGL</span>
+              <span class="meta-tag">GIS</span>
+              <span class="meta-tag">LLM</span>
+            </div>
+          </div>
+        </div>
+        <div class="frame-seal" aria-hidden="true"></div>
+      </article>
+
+    </div>
+
+    <div class="works-footer">
+      <a href="{{ '/projects/' | relative_url }}" class="more-link fish-tail-mark">
+        <span>全部项目</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================== -->
+<!-- 页脚题跋 -->
+<!-- ========================================== -->
+<footer class="site-colophon">
+  <div class="colophon-inner">
+    <div class="colophon-seal">
+      <span class="seal-stamp red-ochre" aria-hidden="true"></span>
+      <span class="seal-text">赵冰琳记于脑所</span>
+    </div>
+    <p class="colophon-date">甲辰秋 · 二〇二六年</p>
+  </div>
+</footer>

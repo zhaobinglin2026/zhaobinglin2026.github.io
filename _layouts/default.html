@@ -1,67 +1,24 @@
-<!-- Lastly modified by Hanlin CAI in 2023/04/26 -->
-<!-- It is not recommended to modify this code, unless you are a Pro-->
-
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> {% if page.lang == 'en' %}
-<html class="no-js" lang="en">
-{% else %}
-<html class="no-js" lang="zh-CN">
-{% endif %}<!--<![endif]-->
-
-<head>
+<!DOCTYPE html>
+<html lang="{% if page.lang %}{{ page.lang }}{% else %}zh-CN{% endif %}" 
+      class="no-js"
+      data-layout="{{ page.layout }}"
+      {% if page.url contains '/en/' %}lang="en"{% endif %}>
 {% include head.html %}
+<body class="song-theme layout-{{ page.layout }} {% if page.url contains '/en/' %}lang-en{% endif %}">
 
+  <!-- 顶部导航 -->
+  {% include navigation.html %}
 
-<script src="https://cdn.counter.dev/script.js" data-id="4c8f7caa-2b55-46cd-a995-2c4633303773" data-utcoffset="8"></script>
+  <!-- 主内容区：宋式美学的"纸面" -->
+  <main class="page-main" role="main" id="main">
+    {{ content }}
+  </main>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T5N5JY1E21"></script>
+  <!-- 通用页脚 -->
+  {% include footer.html %}
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-T5N5JY1E21');
-</script>
-
-</head>
-
-
-
-<body class="page" itemscope itemtype="http://schema.org/WebPage">
-
-{% include chrome-frame.html %}
-
-{% include navigation.html %}
-
-
-{% if page.image.feature %}<div class="image-wrap">
-  <img src="{{ site.url }}/images/{{ page.image.feature }}" alt="{{ page.title }} feature image" itemprop="primaryImageOfPage">
-</div><!-- /.image-wrap -->{% endif %}
-
-<div id="main" role="main"  itemprop="mainContentOfPage">
-  <div class="article-author-top">
-    {% include author-bio.html %}
-  </div>
-  <article itemscope itemtype="http://schema.org/CreativeWork">
-    <div class="headline-wrap">
-      <h1 itemprop="headline">{{ page.title }}</h1>
-    </div><!--/ .headline-wrap -->
-    <div class="article-wrap" itemprop="text">
-      {{ content }}
-    </div><!-- /.article-wrap -->
-  </article>
-</div><!-- /#index -->
-
-<div class="footer-wrap">
-  <footer>
-    {% include footer.html %}
-  </footer>
-</div><!-- /.footer-wrap -->
+  <!-- 底部脚本 -->
+  {% include scripts.html %}
 
 </body>
 </html>

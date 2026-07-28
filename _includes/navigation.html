@@ -1,90 +1,139 @@
-{% comment %}
-  Language detection
-{% endcomment %}
-{% if page.lang %}
-  {% assign current_lang = page.lang %}
-{% elsif page.url contains '/en/' %}
-  {% assign current_lang = 'en' %}
-{% else %}
-  {% assign current_lang = 'zh' %}
-{% endif %}
+<!-- ========================================== -->
+<!-- 宋式导航：顶部横栏 · 鱼尾 · 明式弧线         -->
+<!-- ========================================== -->
+<header class="site-nav" role="banner">
+  <div class="nav-container">
+    
+    <!-- 品牌：姓名 -->
+    <a href="{{ '/' | relative_url }}" class="nav-brand" aria-label="首页">
+      {{ site.title | default: "赵冰琳" }}
+    </a>
 
-{% comment %}
-  Determine navigation links based on language
-{% endcomment %}
-{% if current_lang == 'en' %}
-  {% assign nav_links = site.nav_en %}
-{% else %}
-  {% assign nav_links = site.nav_zh %}
-{% endif %}
+    <!-- 导航链接 -->
+    <nav class="nav-menu" role="navigation" aria-label="主导航">
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a href="{{ '/' | relative_url }}" 
+             class="nav-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}">
+            首页
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/projects/' | relative_url }}" 
+             class="nav-link {% if page.url == '/projects/' or page.url == '/projects.html' %}active{% endif %}">
+            项目
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/blogs/' | relative_url }}" 
+             class="nav-link {% if page.url == '/blogs/' or page.url == '/blogs.html' %}active{% endif %}">
+            博文
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/experiences/' | relative_url }}" 
+             class="nav-link {% if page.url == '/experiences/' or page.url == '/experiences.html' %}active{% endif %}">
+            经历
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ '/CV/' | relative_url }}" 
+             class="nav-link {% if page.url == '/CV/' or page.url == '/CV.html' %}active{% endif %}">
+            履历
+          </a>
+        </li>
+        <li class="nav-item nav-item-lang">
+          <a href="{{ '/en/' | relative_url }}" 
+             class="nav-link {% if page.url contains '/en/' %}active{% endif %}"
+             aria-label="English version">
+            EN
+          </a>
+        </li>
+      </ul>
+    </nav>
 
-{% comment %}
-  Build the counterpart URL for language switching
-{% endcomment %}
-{% if current_lang == 'zh' %}
-  {% if page.url == '/' or page.url == '/index.html' %}
-    {% assign counterpart_url = '/en/' %}
-  {% else %}
-    {% assign counterpart_url = '/en' | append: page.url %}
-  {% endif %}
-  {% assign switch_text = 'EN' %}
-  {% assign switch_title = 'Switch to English' %}
-{% else %}
-  {% if page.url == '/en/' or page.url == '/en/index.html' %}
-    {% assign counterpart_url = '/' %}
-  {% else %}
-    {% assign counterpart_url = page.url | remove_first: '/en' %}
-  {% endif %}
-  {% assign switch_text = '中' %}
-  {% assign switch_title = '切换到中文' %}
-{% endif %}
+    <!-- 深色模式切换：昼 / 夜 -->
+    <button type="button" 
+            class="theme-toggle" 
+            onclick="window.toggleTheme()" 
+            aria-label="切换明暗模式"
+            title="切换明暗模式">
+      <span class="toggle-day" aria-hidden="true">昼</span>
+      <span class="toggle-night" aria-hidden="true">夜</span>
+    </button>
 
-{% comment %}
-  Check if counterpart page exists
-{% endcomment %}
-{% assign counterpart_exists = false %}
-{% for p in site.pages %}
-  {% assign p_url = p.url | remove:'index.html' %}
-  {% assign target_url = counterpart_url | remove:'index.html' %}
-  {% if p_url == target_url %}
-    {% assign counterpart_exists = true %}
-  {% endif %}
-{% endfor %}
+  </div>
+</header>
 
-<div class="navigation-wrapper">
-	<div class="site-name">
-    {% if current_lang == 'en' %}
-      <a href="{{ '/' | relative_url }}en/">{{ site.title }}</a>
-    {% else %}
-      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    {% endif %}
-	</div><!-- /.site-name -->
-  {% capture url %}{{ page.url | remove:'index.html' }}{% endcapture %}
-	<div class="top-navigation">
-		<nav role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-		    <ul>
-		        {% for link in nav_links %}
-            <li><a href="{{ link.url | relative_url }}" {% if url == link.url %}class="top-navigation-current"{% endif %}>{{ link.title }}</a></li>
-		        {% endfor %}
-            {% if counterpart_exists %}
-            <li class="lang-switch"><a href="{{ counterpart_url | relative_url }}" title="{{ switch_title }}" class="lang-switch-link">{{ switch_text }}</a></li>
-            {% endif %}
-		    </ul>
-		</nav>
-	</div><!-- /.top-navigation -->
-</div><!-- /.navigation-wrapper -->
-
+<!-- 导航补充样式：主题切换与移动端微调 -->
 <style>
-  .lang-switch {
-    margin-left: 15px;
-    border-left: 1px solid rgba(255,255,255,0.3);
-    padding-left: 15px;
+  /* 主题切换按钮：印章式极简 */
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-left: 1.5rem;
+    padding: 0;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: var(--font-serif-sc), serif;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    flex-shrink: 0;
   }
-  .lang-switch-link {
-    font-weight: 600;
-    color: #A32121 !important;
+
+  .theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--frame);
+    transform: translateY(-1px);
   }
-  .lang-switch-link:hover {
-    opacity: 0.8;
+
+  /* 通过 data-theme 控制昼/夜显示，无需额外 JS */
+  html:not([data-theme="dark"]) .toggle-night {
+    display: none;
+  }
+  html[data-theme="dark"] .toggle-day {
+    display: none;
+  }
+
+  /* 移动端导航微调 */
+  @media (max-width: 767px) {
+    .nav-container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .nav-links {
+      gap: 1.25rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      padding-right: 0.5rem;
+    }
+    
+    .nav-links::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+    
+    .nav-link {
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+    
+    .theme-toggle {
+      margin-left: 0.75rem;
+    }
+  }
+
+  /* 英文导航项略缩间距 */
+  .nav-item-lang .nav-link {
+    font-family: var(--font-serif-en), var(--font-serif-sc), serif;
+    letter-spacing: 0.04em;
   }
 </style>

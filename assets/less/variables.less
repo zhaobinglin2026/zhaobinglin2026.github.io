@@ -1,19 +1,166 @@
-// TYPOGRAPHY ================================================
-@basefont: 'PT Serif', serif;
-@baseheadingfont: 'PT Sans Narrow', sans-serif;
-@codefont: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+// ==========================================
+// 宋式美学 · 全局变量
+// ==========================================
 
-// COLOR ====================================================
-@bodycolor      : #fff;
-@textcolor      : #333332;
-@basecolor 		: #343434;	  
-@compcolor 		: spin(@basecolor, 180); 
-@bordercolor    : @basecolor;
-@white          : #fff;
-@black          : #000;
-@accentcolor    : @black;
-/* Links ================================================= */
-@linkcolor 		    : #343434;
-@linkcolorhover 	: darken(@linkcolor, 10);
-@linkcolorvisited   : lighten(@linkcolorhover, 20);
-@linkcolorfocus 	: darken(@linkcolorvisited, 10);
+// ------------------------------------------
+// 1. 字体栈
+// ------------------------------------------
+@font-serif-sc: "Noto Serif SC", "Songti SC", "SimSun", serif;
+@font-serif-en: "Crimson Pro", "Source Serif Pro", Georgia, "Times New Roman", serif;
+@font-mono: "SF Mono", "Fira Code", "Noto Sans SC", monospace;
+
+// ------------------------------------------
+// 2. 宋式色彩（LESS 常量，供下方 CSS 变量引用）
+// ------------------------------------------
+
+// 纸白系（背景）
+@color-rice-paper: #F5F3EF;      // 主背景：宣纸黄，微暖
+@color-rice-deep: #EDE9E3;       // 次级背景：略深的熟宣
+@color-ink-wash: #E8E4DE;        // 卡片/区块背景：淡墨染纸
+
+// 墨色系（文字）
+@color-zi: #2B2B2B;              // 缁色：主文字，非纯黑，含暖灰
+@color-zi-secondary: #5C5A56;    // 次级文字：注疏、说明
+@color-zi-muted: #8C8A85;        // 辅助文字：日期、标签
+
+// 天青系（强调/交互）
+@color-sky-cyan: #8FB2C9;        // 汝窑天青：链接、hover、光晕
+@color-sky-deep: #6B94B0;        // 深天青：active 状态
+@color-sky-pale: rgba(143, 178, 201, 0.15); // 微光破墨节点色
+
+// 赭红系（印章）
+@color-red-ochre: #9E2A2B;       // 赭红：印章、标记、重要标签
+@color-red-ochre-pale: rgba(158, 42, 43, 0.08); // 极淡赭底
+
+// 画框系（装裱）
+@color-frame: #D4CFC7;           // 画框细线：绢本衬边色
+@color-frame-deep: #B5B0A6;      // 深框线：hover 或次级边界
+
+// 冰裂纹（隐性质感，透明度<3%）
+@color-ice-crack: rgba(43, 43, 43, 0.025);   // 浅色模式
+@color-ice-crack-dark: rgba(212, 197, 176, 0.03); // 深色模式
+
+// ------------------------------------------
+// 3. 暖夜读模式色彩（深色常量）
+// ------------------------------------------
+@color-night-ink: #1A1814;       // 墨色背景：深褐偏暖，非冷灰
+@color-night-gold: #D4C5B0;      // 淡金：主文字，模拟灯下读书
+@color-night-gold-dim: #A89B88;  // 暗金：次级文字
+@color-night-cyan: #5A7A8A;      // 暗天青：深色模式强调
+@color-night-candle: #C9A87C;    // 烛火橙：hover、鱼尾标记
+@color-night-card: #24201C;      // 卡片背景：略浅于墨色
+@color-night-frame: #3A3530;     // 深色画框线
+
+
+// ==========================================
+// CSS 自定义属性（运行时深色模式切换）
+// 通过 JS 切换 html 的 data-theme="dark" 即可
+// ==========================================
+:root {
+  // 背景
+  --bg-body: @color-rice-paper;
+  --bg-card: @color-ink-wash;
+  --bg-elevated: @color-rice-deep;
+
+  // 文字
+  --text-primary: @color-zi;
+  --text-secondary: @color-zi-secondary;
+  --text-muted: @color-zi-muted;
+
+  // 强调
+  --accent: @color-sky-cyan;
+  --accent-deep: @color-sky-deep;
+  --accent-glow: @color-sky-pale;
+
+  // 印章/标记
+  --seal: @color-red-ochre;
+  --seal-pale: @color-red-ochre-pale;
+
+  // 边框/画框
+  --frame: @color-frame;
+  --frame-deep: @color-frame-deep;
+
+  // 冰裂纹
+  --ice-crack: @color-ice-crack;
+
+  // 阴影（极克制，仅用于装裱的微弱立体感）
+  --shadow-mounting: 0 1px 3px rgba(43, 43, 43, 0.04), 
+                      0 4px 12px rgba(43, 43, 43, 0.03);
+
+  // 动效
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --breath-duration: 18s; // 自呼吸周期：15-20秒取中值
+
+  // 字体
+  --font-serif-sc: @font-serif-sc;
+  --font-serif-en: @font-serif-en;
+  --font-mono: @font-mono;
+
+  // 间距（宋版书疏朗体系）
+  --line-height-body: 1.85;
+  --line-height-tight: 1.5;
+  --spacing-unit: 8px;
+  --section-gap: 120px;    // 卷与卷之间的呼吸距离
+  --content-max-width: 1200px;
+  --preface-margin-width: 160px; // 序言页边栏宽度
+}
+
+// ------------------------------------------
+// 暖夜读模式
+// ------------------------------------------
+[data-theme="dark"] {
+  --bg-body: @color-night-ink;
+  --bg-card: @color-night-card;
+  --bg-elevated: #2E2924;
+
+  --text-primary: @color-night-gold;
+  --text-secondary: @color-night-gold-dim;
+  --text-muted: #7A7165;
+
+  --accent: @color-night-cyan;
+  --accent-deep: #7A9BA8;
+  --accent-glow: rgba(90, 122, 138, 0.2);
+
+  --seal: #B85C5D;           // 深色模式下印章稍亮，保持可读
+  --seal-pale: rgba(184, 92, 93, 0.12);
+
+  --frame: @color-night-frame;
+  --frame-deep: #4A4540;
+
+  --ice-crack: @color-ice-crack-dark;
+
+  --shadow-mounting: 0 1px 3px rgba(0, 0, 0, 0.2), 
+                      0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+// ==========================================
+// 4. 响应式断点
+// ==========================================
+@breakpoint-sm: 480px;   // 手机横屏
+@breakpoint-md: 768px;   // 平板
+@breakpoint-lg: 1024px;  // 小型桌面（单屏左右分栏起点）
+@breakpoint-xl: 1280px;  // 宽屏（序言边栏完全展开）
+@breakpoint-xxl: 1440px; // 超宽屏（最大内容区居中）
+
+// 混合宏：宋式容器
+.song-container() {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: calc(var(--spacing-unit) * 3);
+  padding-right: calc(var(--spacing-unit) * 3);
+
+  @media (min-width: @breakpoint-lg) {
+    padding-left: calc(var(--spacing-unit) * 6);
+    padding-right: calc(var(--spacing-unit) * 6);
+  }
+}
+
+// 混合宏：冰裂纹隐性质感
+.ice-crack-texture() {
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40,40 Q60,35 80,45 T120,40' fill='none' stroke='%23000000' stroke-width='0.5' opacity='0.03'/%3E%3Cpath d='M45,100 Q70,95 90,105 T140,95' fill='none' stroke='%23000000' stroke-width='0.5' opacity='0.025'/%3E%3Cpath d='M30,160 Q55,155 75,165 T130,155' fill='none' stroke='%23000000' stroke-width='0.5' opacity='0.02'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
